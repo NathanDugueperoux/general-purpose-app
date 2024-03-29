@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from functions import handle_invalid_email, handle_invalid_password
+import json
 
 
 def sign_up():
@@ -14,11 +15,18 @@ def sign_up():
         elif handle_invalid_password(password.get()) == "too small":
             error_label["text"] = "password must be more than 3 characters"
         elif handle_invalid_password(password.get()) == "no special chars":
-            error_label["text"] = "password must include one of these special characters: !£$%^&*()_-+={[]}@'~#:;><,.?/|`¬"
+            error_label[
+                "text"] = "password must include one of these special characters : \n            !£$%^&*()_-+={[]}@'~#:;><,.?/|`¬"
         else:
-            with open("passwords.txt", "w") as file:
-                file.write(f"{username.get()}\n{password.get()}\n{email.get()}")
-            username_label["text"] = "username"
+            with open("passwords.json", "r") as file:
+                content = json.load(file)
+                print(content)
+
+            content["accounts"].append({"email": email.get(),
+                                        "username": username.get(),
+                                        "password": password.get()})
+            with open("passwords.json", "w") as file:
+                json.dump(content, file, indent=4)
             window.destroy()
             sign_in()
 
@@ -32,7 +40,7 @@ def sign_up():
     email = tk.StringVar(value=None)
 
     error_label = ttk.Label(window, text="")
-    sign_up_label = ttk.Label(window, text="Sign Up", font=3)
+    sign_up_label = ttk.Label(window, text="Create an account", font=3)
     email_label = ttk.Label(window, text="email")
     email_entry = ttk.Entry(window, textvariable=email)
     username_label = ttk.Label(window, text="username")
@@ -43,7 +51,7 @@ def sign_up():
 
     window.columnconfigure((0, 1, 3, 4), weight=1, uniform="a")
     window.columnconfigure(2, weight=2, uniform="a")
-    window.rowconfigure((0, 1, 2, 3, 4, 5), weight=1, uniform="a")
+    window.rowconfigure((0, 1, 2, 3, 4, 5, 6), weight=1, uniform="a")
 
     sign_up_label.grid(column=2, row=0, sticky="s")
     email_label.grid(column=2, row=1, sticky="w")
@@ -59,14 +67,19 @@ def sign_up():
 
 
 def sign_in():
-
-    def button_function():
-        with open("passwords.txt", "r") as file:
-            content = file.readlines()
-            if (f"{username_email.get()}\n" == content[0] or f"{username_email.get()}" == content[2]) and f"{password.get()}\n" == content[1]:
-                window.destroy()
+    def sign_in_button_function():
+        with open("passwords.json", "r") as file:
+            contents = json.load(file)
+            for i in range((len(contents["accounts"]))):
+                if (contents["accounts"][i]["email"] == username_email.get() or contents["accounts"][i]["username"] == username_email.get()) and contents["accounts"][i]["password"] == password.get():
+                    window.destroy()
+                    break
             else:
-                error_label["text"] = "wrong email, username or password"
+                error_label["text"] = "username, email or password invalid"
+
+    def create_account_button_function():
+        window.destroy()
+        sign_up()
 
     window = tk.Tk()
 
@@ -83,7 +96,8 @@ def sign_in():
     password_label = ttk.Label(window, text="password")
     username_entry = ttk.Entry(window, textvariable=username_email)
     password_entry = ttk.Entry(window, textvariable=password)
-    button_entry = ttk.Button(window, text="sign up", command=button_function)
+    sign_in_button = ttk.Button(window, text="sign in", command=sign_in_button_function)
+    create_account_button = ttk.Button(window, text="create an account", command=create_account_button_function)
 
     window.columnconfigure((0, 1, 3, 4), weight=1, uniform="a")
     window.columnconfigure(2, weight=2, uniform="a")
@@ -94,14 +108,11 @@ def sign_in():
     username_entry.grid(column=2, row=1, sticky="sew")
     password_label.grid(column=2, row=2, sticky="w")
     password_entry.grid(column=2, row=2, sticky="sew")
-    button_entry.grid(column=2, row=3, sticky="esw")
+    sign_in_button.grid(column=2, row=3, sticky="ew")
+    create_account_button.grid(column=2, row=3, sticky="esw")
     error_label.grid(column=2, row=4)
 
     window.mainloop()
 
 
-with open("passwords.txt", "r") as file:
-    if file.read() == "":
-        sign_up()
-    else:
-        sign_in()
+sign_in()
