@@ -25,3 +25,33 @@ def handle_invalid_password(password):
             return "no special chars"
 
 
+def handle_encryption(word):
+    chars = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+    cap_chars = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz".upper()
+    word = [*word]
+    for i in range(len(word)):
+        if word[i].isalpha():
+            if word[i].islower():
+                word[i] = chars[(chars.index(word[i])) + 5]
+            elif word[i].isupper():
+                word[i] = cap_chars[(cap_chars.index(word[i])) + 5]
+        elif word[i].isdigit():
+            word[i] = str(int(word[i]) + 5)
+    return "".join(word)
+
+
+def handle_decryption(word):
+    chars = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+    cap_chars = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz".upper()
+    word = [*word]
+    for i in range(len(word)):
+        if word[i].isalpha():
+            if word[i].islower():
+                word[i] = chars[(chars.index(word[i])) - 5]
+            elif word[i].isupper():
+                word[i] = cap_chars[(cap_chars.index(word[i])) - 5]
+        elif word[i].isdigit():
+            word[i] = str(int(word[i]) - 5)
+    return "".join(word)
+
+
