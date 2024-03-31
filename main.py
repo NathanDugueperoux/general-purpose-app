@@ -62,6 +62,7 @@ def sign_up():
     password_label = ttk.Label(window, text="password")
     password_entry = ttk.Entry(window, textvariable=password)
     sign_up_button = ttk.Button(window, text="sign up", command=button_function)
+    already_have_an_account_label = ttk.Label(window, text="already have an account?")
     sign_in_button = ttk.Button(window, text="sign in", command=switch_page_function)
     error_label = ttk.Label(window, text="")
 
@@ -77,6 +78,7 @@ def sign_up():
     password_label.grid(column=2, row=3, sticky="w")
     password_entry.grid(column=2, row=3, sticky="sew")
     sign_up_button.grid(column=2, row=4, sticky="esw")
+    already_have_an_account_label.grid(column=2, row=5)
     sign_in_button.grid(column=2, row=5, sticky="esw")
     error_label.grid(column=2, row=6)
 
@@ -114,6 +116,7 @@ def sign_in():
     username_entry = ttk.Entry(window, textvariable=username_email)
     password_entry = ttk.Entry(window, textvariable=password)
     sign_in_button = ttk.Button(window, text="sign in", command=sign_in_button_function)
+    dont_have_an_account_label = ttk.Label(window, text="don't have an account?")
     create_account_button = ttk.Button(window, text="create an account", command=create_account_button_function)
 
     window.columnconfigure((0, 1, 3, 4), weight=1, uniform="a")
@@ -126,6 +129,7 @@ def sign_in():
     password_label.grid(column=2, row=2, sticky="w")
     password_entry.grid(column=2, row=2, sticky="sew")
     sign_in_button.grid(column=2, row=3, sticky="sew")
+    dont_have_an_account_label.grid(column=2, row=4)
     create_account_button.grid(column=2, row=4, sticky="sew")
     error_label.grid(column=2, row=5)
 
