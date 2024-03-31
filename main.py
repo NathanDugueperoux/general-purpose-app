@@ -6,6 +6,18 @@ import json
 
 def sign_up():
     def button_function():
+        account_taken = False
+        with open("passwords.json", "r") as file:
+            contents = json.load(file)
+            for i in range((len(contents["accounts"]))):
+                if contents["accounts"][i]["username"] == username.get():
+                    error_label["text"] = "username taken"
+                    account_taken = True
+                    break
+                elif contents["accounts"][i]["email"] == email.get():
+                    error_label["text"] = "email already in use"
+                    account_taken = True
+                    break
         if email.get() == "" or password.get() == "" or username.get() == "":
             error_label["text"] = "empty space"
         elif handle_invalid_email(email.get()) == "invalid":
@@ -15,9 +27,8 @@ def sign_up():
         elif handle_invalid_password(password.get()) == "too small":
             error_label["text"] = "password must be more than 3 characters"
         elif handle_invalid_password(password.get()) == "no special chars":
-            error_label[
-                "text"] = "password must include one of these special characters : \n            !£$%^&*()_-+={[]}@'~#:;><,.?/|`¬"
-        else:
+            error_label["text"] = "password must include one of these special characters : \n            !£$%^&*()_-+={[]}@'~#:;><,.?/|`¬"
+        elif account_taken == False:
             with open("passwords.json", "r") as file:
                 content = json.load(file)
                 print(content)
@@ -30,6 +41,10 @@ def sign_up():
             window.destroy()
             sign_in()
 
+    def switch_page_function():
+        window.destroy()
+        sign_in()
+
     window = tk.Tk()
     window.title("Sign Up")
     window.geometry("1000x600")
@@ -39,7 +54,6 @@ def sign_up():
     password = tk.StringVar(value=None)
     email = tk.StringVar(value=None)
 
-    error_label = ttk.Label(window, text="")
     sign_up_label = ttk.Label(window, text="Create an account", font=3)
     email_label = ttk.Label(window, text="email")
     email_entry = ttk.Entry(window, textvariable=email)
@@ -47,11 +61,13 @@ def sign_up():
     username_entry = ttk.Entry(window, textvariable=username)
     password_label = ttk.Label(window, text="password")
     password_entry = ttk.Entry(window, textvariable=password)
-    button_entry = ttk.Button(window, text="sign up", command=button_function)
+    sign_up_button = ttk.Button(window, text="sign up", command=button_function)
+    sign_in_button = ttk.Button(window, text="sign in", command=switch_page_function)
+    error_label = ttk.Label(window, text="")
 
     window.columnconfigure((0, 1, 3, 4), weight=1, uniform="a")
     window.columnconfigure(2, weight=2, uniform="a")
-    window.rowconfigure((0, 1, 2, 3, 4, 5, 6), weight=1, uniform="a")
+    window.rowconfigure((0, 1, 2, 3, 4, 5, 6, 7), weight=1, uniform="a")
 
     sign_up_label.grid(column=2, row=0, sticky="s")
     email_label.grid(column=2, row=1, sticky="w")
@@ -60,8 +76,9 @@ def sign_up():
     username_entry.grid(column=2, row=2, sticky="sew")
     password_label.grid(column=2, row=3, sticky="w")
     password_entry.grid(column=2, row=3, sticky="sew")
-    button_entry.grid(column=2, row=4, sticky="esw")
-    error_label.grid(column=2, row=5)
+    sign_up_button.grid(column=2, row=4, sticky="esw")
+    sign_in_button.grid(column=2, row=5, sticky="esw")
+    error_label.grid(column=2, row=6)
 
     window.mainloop()
 
@@ -101,16 +118,16 @@ def sign_in():
 
     window.columnconfigure((0, 1, 3, 4), weight=1, uniform="a")
     window.columnconfigure(2, weight=2, uniform="a")
-    window.rowconfigure((0, 1, 2, 3, 4, 5), weight=1, uniform="a")
+    window.rowconfigure((0, 1, 2, 3, 4, 5, 6), weight=1, uniform="a")
 
     sign_up_label.grid(column=2, row=0, sticky="s")
     username_label.grid(column=2, row=1, sticky="w")
     username_entry.grid(column=2, row=1, sticky="sew")
     password_label.grid(column=2, row=2, sticky="w")
     password_entry.grid(column=2, row=2, sticky="sew")
-    sign_in_button.grid(column=2, row=3, sticky="ew")
-    create_account_button.grid(column=2, row=3, sticky="esw")
-    error_label.grid(column=2, row=4)
+    sign_in_button.grid(column=2, row=3, sticky="sew")
+    create_account_button.grid(column=2, row=4, sticky="sew")
+    error_label.grid(column=2, row=5)
 
     window.mainloop()
 
