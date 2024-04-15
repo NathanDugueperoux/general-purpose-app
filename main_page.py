@@ -28,8 +28,9 @@ def cryptography_page():
     window.columnconfigure((0, 1, 2), weight=1, uniform="a")
     window.rowconfigure((0, 1), weight=1, uniform="a")
     encryption_frame.columnconfigure((0, 1, 2), weight=1, uniform="a")
+    decryption_frame.columnconfigure((0, 1, 2), weight=1, uniform="a")
 
-    encryption_entry.grid(column=1)
     encryption_frame.grid(column=0, row=0, columnspan=3)
+    encryption_entry.grid(column=1)
 
     window.mainloop()

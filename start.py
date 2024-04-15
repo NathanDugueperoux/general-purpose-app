@@ -32,7 +32,6 @@ def sign_up():
         elif account_taken == False:
             with open("passwords.json", "r") as file:
                 content = json.load(file)
-                print(content)
 
             content["accounts"].append({"email": email.get(),
                                         "username": username.get(),
