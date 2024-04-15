@@ -116,7 +116,7 @@ def sign_in():
     username_label = ttk.Label(window, text="username or email")
     password_label = ttk.Label(window, text="password")
     username_entry = ttk.Entry(window, textvariable=username_email)
-    password_entry = ttk.Entry(window, textvariable=password)
+    password_entry = ttk.Entry(window, textvariable=password, show="*")
     sign_in_button = ttk.Button(window, text="sign in", command=sign_in_button_function)
     dont_have_an_account_label = ttk.Label(window, text="don't have an account?")
     create_account_button = ttk.Button(window, text="create an account", command=create_account_button_function)
@@ -138,4 +138,4 @@ def sign_in():
     window.mainloop()
 
 
-cryptography_page()
+sign_in()
