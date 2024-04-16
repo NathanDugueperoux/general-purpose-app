@@ -136,5 +136,4 @@ def sign_in():
 
     window.mainloop()
 
-
-cryptography_page()
+sign_in()

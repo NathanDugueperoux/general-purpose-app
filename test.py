@@ -3,9 +3,15 @@ from tkinter import ttk
 
 window = tk.Tk()
 window.geometry("1000x1000")
-frame = tk.Frame(bg="red", width=200, height=200)
-entry = ttk.Entry(frame)
-window.columnconfigure((0, 1, 2), weight=1, uniform="a")
-frame.grid(column=1)
-entry.grid(column=0)
+
+var1 = tk.IntVar()
+
+
+radio1 = ttk.Radiobutton(window, variable=var1, value=2)
+radio2 = ttk.Radiobutton(window, variable=var1, value=1, command=lambda: print("hello"))
+
+radio1.pack()
+radio2.pack()
+
 window.mainloop()
+
