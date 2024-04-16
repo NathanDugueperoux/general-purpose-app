@@ -15,6 +15,10 @@ def cryptography_page():
     window.geometry("1000x600")
     window.title("")
 
+    # declaring radio button
+
+    encryption_radio_button = ttk.Radiobutton(window, text="encryption")
+
     # declaring tk variables
 
     encryption_var = tk.StringVar()
@@ -54,8 +58,9 @@ def cryptography_page():
     decryption_frame.grid(column=1, row=0, sticky="nesw")
     decryption_button.grid(column=0)
 
-    encryption_frame.tkraise()
+    # positioning radio buttons
 
+    encryption_radio_button.grid(column=0, row=0, sticky="n")
     window.mainloop()
 
 
