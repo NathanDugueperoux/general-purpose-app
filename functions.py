@@ -53,5 +53,3 @@ def handle_decryption(word):
         elif word[i].isdigit():
             word[i] = str(int(word[i]) - 5)
     return "".join(word)
-
-
