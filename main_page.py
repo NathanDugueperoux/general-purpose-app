@@ -3,7 +3,7 @@ from tkinter import ttk
 from functions import handle_decryption, handle_encryption
 
 
-def cryptography_page():
+def general_purpose_page():
 
     def encryption_function():
         encryption_output["text"] = handle_encryption(encryption_var.get())
@@ -23,7 +23,7 @@ def cryptography_page():
 
     # creating the widgets and frames
 
-    encryption_frame = tk.Frame(window, width=100, height=100)
+    encryption_frame = tk.Frame(window, width=100, height=100, bg="red")
     encryption_title = ttk.Label(encryption_frame, text="Encrypt", font=3)
     encryption_entry = ttk.Entry(encryption_frame, textvariable=encryption_var)
     encryption_button = ttk.Button(encryption_frame, text="encrypt", command=encryption_function)
@@ -41,8 +41,8 @@ def cryptography_page():
 
     # creating columns and rows for the window
 
-    window.columnconfigure(0, weight=1, uniform="a")
-    window.columnconfigure((1, 2), weight=2, uniform="a")
+    window.columnconfigure((0, 1), weight=1, uniform="a")
+    window.columnconfigure(2, weight=4, uniform="a")
     window.rowconfigure(0, weight=1, uniform="a")
 
     # creating columns and rows for frames
@@ -58,7 +58,7 @@ def cryptography_page():
 
     # positioning the encryption frame
 
-    encryption_frame.grid(column=1, row=0, sticky="nsew")
+    encryption_frame.grid(column=2, row=0, sticky="nsew")
     encryption_title.grid(column=0, row=0, sticky="s")
     encryption_entry.grid(column=0)
     encryption_button.grid(column=0, row=2, sticky="n")
@@ -66,7 +66,7 @@ def cryptography_page():
 
     # positioning the decryption frame
 
-    decryption_frame.grid(column=1, row=0, sticky="nsew")
+    decryption_frame.grid(column=2, row=0, sticky="nsew")
     decryption_title.grid(column=0, row=0, sticky="s")
     decryption_entry.grid(column=0)
     decryption_button.grid(column=0, row=2, sticky="n")
@@ -74,10 +74,12 @@ def cryptography_page():
 
     # positioning radio button frame
 
-    radio_button_frame.grid(column=0, row=0, sticky="nsew")
+    radio_button_frame.grid(column=1, row=0, sticky="nsew")
     encryption_radio_button.grid(column=0, row=0)
     decryption_radio_button.grid(column=0, row=0, sticky="s")
 
     # window mainloop
 
     window.mainloop()
+
+general_purpose_page()

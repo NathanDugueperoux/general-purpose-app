@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from functions import handle_invalid_email, handle_invalid_password
-from main_page import cryptography_page
+from main_page import general_purpose_page
 import json
 
 
@@ -92,7 +92,7 @@ def sign_in():
             for i in range((len(contents["accounts"]))):
                 if (contents["accounts"][i]["email"] == username_email.get() or contents["accounts"][i]["username"] == username_email.get()) and contents["accounts"][i]["password"] == password.get():
                     window.destroy()
-                    cryptography_page()
+                    general_purpose_page()
                     break
             else:
                 error_label["text"] = "username, email or password invalid"
